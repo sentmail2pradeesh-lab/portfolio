@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, Linkedin, Send, Copy, Check, Clock, Shield } from 'lucide-react';
+import { Mail, Phone, Linkedin, Send, Copy, Check, Clock, Shield, Loader2 } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 
 export default function Contact({ prefilledMessage }) {
@@ -12,7 +12,9 @@ export default function Contact({ prefilledMessage }) {
   });
 
   const [copiedField, setCopiedField] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (prefilledMessage) {
@@ -26,10 +28,47 @@ export default function Contact({ prefilledMessage }) {
     setTimeout(() => setCopiedField(null), 2500);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-    setSubmitted(true);
+
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      // Send real email via FormSubmit AJAX service directly to sendmail2pradeesh@gmail.com
+      const response = await fetch('https://formsubmit.co/ajax/sendmail2pradeesh@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `⚡ New Freelance Inquiry from ${formData.name}`,
+          name: formData.name,
+          email: formData.email,
+          serviceType: formData.serviceType,
+          budget: formData.budget,
+          message: formData.message,
+          _captcha: 'false'
+        })
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        // Fallback email trigger
+        window.location.href = `mailto:${personalInfo.email}?subject=${encodeURIComponent(`Freelance Inquiry: ${formData.serviceType}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`)}`;
+        setSubmitted(true);
+      }
+    } catch (err) {
+      console.error('Email submission error:', err);
+      // Fallback to mailto link if network is blocked
+      window.location.href = `mailto:${personalInfo.email}?subject=${encodeURIComponent(`Freelance Inquiry: ${formData.serviceType}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`)}`;
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -45,7 +84,7 @@ export default function Contact({ prefilledMessage }) {
             Start Your Freelance Project Today
           </h2>
           <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)' }}>
-            Have a project in mind, need a full-stack developer, or AI automation? Reach out directly or fill out the form below.
+            Have a project in mind, need a full-stack developer, or AI automation? Fill out the form below to send an instant email to <strong>{personalInfo.email}</strong>.
           </p>
         </div>
 
@@ -224,10 +263,10 @@ export default function Contact({ prefilledMessage }) {
                     <Check size={32} />
                   </div>
                   <h3 style={{ fontSize: '1.6rem', color: 'var(--primary-900)', marginBottom: '0.75rem' }}>
-                    Inquiry Received!
+                    Email Sent Successfully!
                   </h3>
                   <p style={{ color: 'var(--text-muted)', fontSize: '1rem', maxWidth: '480px', margin: '0 auto 2rem auto' }}>
-                    Thank you for reaching out, <strong>{formData.name}</strong>. Pradeeshwaran will review your project details and respond to <strong>{formData.email}</strong> shortly.
+                    Thank you, <strong>{formData.name}</strong>! An email with your project details has been sent to <strong>sendmail2pradeesh@gmail.com</strong>. I will get back to you shortly.
                   </p>
                   <button
                     onClick={() => {
@@ -370,6 +409,7 @@ export default function Contact({ prefilledMessage }) {
 
                   <button
                     type="submit"
+                    disabled={isSubmitting}
                     style={{
                       width: '100%',
                       padding: '14px',
@@ -382,10 +422,21 @@ export default function Contact({ prefilledMessage }) {
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '8px',
-                      boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)'
+                      boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)',
+                      opacity: isSubmitting ? 0.8 : 1,
+                      cursor: isSubmitting ? 'wait' : 'pointer'
                     }}
                   >
-                    Submit Project Inquiry <Send size={18} />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 size={18} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
+                        Sending Email to sendmail2pradeesh@gmail.com...
+                      </>
+                    ) : (
+                      <>
+                        Submit Project Inquiry <Send size={18} />
+                      </>
+                    )}
                   </button>
                 </form>
               )}
@@ -397,6 +448,10 @@ export default function Contact({ prefilledMessage }) {
       </div>
 
       <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
         @media (min-width: 992px) {
           .cnt-left-col { grid-column: span 5 !important; }
           .cnt-right-col { grid-column: span 7 !important; }

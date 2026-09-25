@@ -179,7 +179,7 @@ export default function ResumeViewer() {
                 CAREER OBJECTIVE
               </h3>
               <p style={{ fontSize: '0.95rem', color: 'var(--primary-700)', lineHeight: 1.6 }}>
-                Integrated M.Sc. Information Technology graduate from Anna University with hands-on software development internship experience. Proficient in <strong>Python, Full-Stack systems, and core computer science fundamentals</strong>. Strong analytical and quantitative problem-solving skills with an active foundation-building in Web3, Blockchain fundamentals, Smart Contracts, and basic Solidity. Eager to contribute as a Software Engineer in high-performance technical ecosystems.
+                Integrated M.Sc. Information Technology graduate from Anna University with hands-on software development internship experience at <strong>CSTF, IIT Madras</strong> and <strong>Atsuya Technologies</strong>. Proficient in <strong>React.js, Node.js, Express, PostgreSQL, RESTful APIs, Linux systems, and applied AI</strong>. Strong architectural problem-solving skills with a commitment to writing clean, testable, and maintainable code. Seeking a <strong>Full-Time Full-Stack Developer / Software Development Engineer (SDE)</strong> role in a collaborative engineering team.
               </p>
             </div>
 

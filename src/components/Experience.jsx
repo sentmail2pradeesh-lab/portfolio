@@ -10,13 +10,13 @@ export default function Experience() {
         {/* Section Header */}
         <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 4rem auto' }}>
           <span className="badge badge-brand" style={{ marginBottom: '1rem' }}>
-            Track Record & Qualifications
+            Proven Track Record
           </span>
           <h2 style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--primary-900)', marginBottom: '1rem' }}>
-            Work Experience & Academic Credentials
+            Software Engineering Experience & Credentials
           </h2>
           <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)' }}>
-            Proven experience in high-performance institutional software labs, commercial tech companies, and leadership leadership positions.
+            Hands-on delivery in institutional software engineering labs, enterprise tech companies, and university leadership roles.
           </p>
         </div>
 

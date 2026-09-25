@@ -1,10 +1,11 @@
 import React from 'react';
-import { ArrowRight, Download, CheckCircle2, Award } from 'lucide-react';
+import { ArrowRight, Download, CheckCircle2, Award, Briefcase, MapPin, Clock } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 
 export default function Hero({ onOpenContact }) {
   return (
     <section
+      id="hero"
       style={{
         paddingTop: '4rem',
         paddingBottom: '5rem',
@@ -49,13 +50,16 @@ export default function Hero({ onOpenContact }) {
           }}
         >
           {/* Main Hero Column */}
-          <div style={{ gridColumn: 'span 12', '@media (min-width: 992px)': { gridColumn: 'span 7' } }} className="hero-text-col">
+          <div style={{ gridColumn: 'span 12' }} className="hero-text-col">
             
             {/* Status Pill */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px', marginBottom: '1.25rem' }}>
               <span className="badge badge-emerald">
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#059669', animation: 'pulseGlow 2s infinite' }}></span>
-                Available for Freelance & Contract Work
+                Actively Seeking Full-Time Full-Stack Roles
+              </span>
+              <span className="badge badge-neutral" style={{ fontSize: '0.8rem' }}>
+                Immediate Joiner
               </span>
               <span className="badge badge-neutral" style={{ fontSize: '0.8rem' }}>
                 Anna University M.Sc. IT
@@ -73,7 +77,7 @@ export default function Hero({ onOpenContact }) {
                 marginBottom: '1.25rem'
               }}
             >
-              Engineering <span style={{ color: 'var(--brand-600)', position: 'relative', display: 'inline-block' }}>Scalable Full-Stack</span> Apps & AI Solutions
+              Engineering <span style={{ color: 'var(--brand-600)', position: 'relative', display: 'inline-block' }}>Scalable Full-Stack</span> Systems & Enterprise Web Apps
             </h1>
 
             {/* Subtitle */}
@@ -83,10 +87,10 @@ export default function Hero({ onOpenContact }) {
                 color: 'var(--text-muted)',
                 lineHeight: 1.6,
                 marginBottom: '2rem',
-                maxWidth: '640px'
+                maxWidth: '650px'
               }}
             >
-              Hi, I'm <strong style={{ color: 'var(--primary-900)' }}>Pradeeshwaran M</strong> — a Software Development Engineer & Freelancer with hands-on experience at <strong style={{ color: 'var(--primary-900)' }}>IIT Madras</strong> and <strong style={{ color: 'var(--primary-900)' }}>Atsuya Technologies</strong>. I build high-performance React/Node web platforms, RESTful APIs, and Python AI pipelines.
+              Hi, I'm <strong style={{ color: 'var(--primary-900)' }}>Pradeeshwaran M</strong> — a Full-Stack Software Engineer with proven internship delivery at <strong style={{ color: 'var(--primary-900)' }}>CSTF, IIT Madras</strong> and <strong style={{ color: 'var(--primary-900)' }}>Atsuya Technologies</strong>. I architect responsive React frontends, resilient Node.js / PostgreSQL REST APIs, and applied AI pipelines for collaborative product teams.
             </p>
 
             {/* CTA Group */}
@@ -122,7 +126,7 @@ export default function Hero({ onOpenContact }) {
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
-                Start a Freelance Project <ArrowRight size={18} />
+                Discuss Opportunities <ArrowRight size={18} />
               </button>
 
               <a
@@ -150,26 +154,55 @@ export default function Hero({ onOpenContact }) {
                   e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
-                <Download size={18} /> View Resume
+                <Download size={18} /> View Official Resume
+              </a>
+
+              <a
+                href="#projects"
+                style={{
+                  padding: '14px 20px',
+                  borderRadius: 'var(--radius-md)',
+                  backgroundColor: 'transparent',
+                  color: 'var(--brand-600)',
+                  fontWeight: 600,
+                  fontSize: '0.975rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = 'var(--brand-700)';
+                  e.currentTarget.style.transform = 'translateX(3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = 'var(--brand-600)';
+                  e.currentTarget.style.transform = 'translateX(0)';
+                }}
+              >
+                Explore Projects →
               </a>
             </div>
 
-            {/* Assurance Trust Badges */}
+            {/* Key Engineering Competency Checkmarks */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', borderTop: '1px solid var(--border-light)', paddingTop: '1.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-subtle)', fontWeight: 500 }}>
-                <CheckCircle2 size={16} color="var(--accent-emerald)" /> Full-Stack Web Apps
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-subtle)', fontWeight: 600 }}>
+                <CheckCircle2 size={16} color="var(--accent-emerald)" /> React.js & Modern UI
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-subtle)', fontWeight: 500 }}>
-                <CheckCircle2 size={16} color="var(--accent-emerald)" /> RESTful API Engineering
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-subtle)', fontWeight: 600 }}>
+                <CheckCircle2 size={16} color="var(--accent-emerald)" /> Node.js & REST APIs
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-subtle)', fontWeight: 500 }}>
-                <CheckCircle2 size={16} color="var(--accent-emerald)" /> PyTorch AI & Data
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-subtle)', fontWeight: 600 }}>
+                <CheckCircle2 size={16} color="var(--accent-emerald)" /> PostgreSQL Relational DBs
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--text-subtle)', fontWeight: 600 }}>
+                <CheckCircle2 size={16} color="var(--accent-emerald)" /> PyTorch AI & Linux
               </div>
             </div>
           </div>
 
-          {/* Right Card Column - Executive Resume Card */}
-          <div style={{ gridColumn: 'span 12', '@media (min-width: 992px)': { gridColumn: 'span 5' } }} className="hero-card-col">
+          {/* Right Card Column - Engineering Candidate Profile Card */}
+          <div style={{ gridColumn: 'span 12' }} className="hero-card-col">
             <div
               className="classic-card"
               style={{
@@ -180,65 +213,94 @@ export default function Hero({ onOpenContact }) {
                 position: 'relative'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+              {/* Header profile row */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <div
                     style={{
-                      width: '48px',
-                      height: '48px',
-                      borderRadius: '50%',
-                      backgroundColor: 'var(--brand-50)',
-                      color: 'var(--brand-600)',
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '14px',
+                      background: 'linear-gradient(135deg, var(--primary-900), var(--brand-600))',
+                      color: '#ffffff',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      fontWeight: 700,
-                      fontSize: '1.1rem',
-                      border: '2px solid var(--border-brand)'
+                      fontWeight: 800,
+                      fontSize: '1.2rem',
+                      boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)'
                     }}
                   >
                     PM
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1.15rem', color: 'var(--primary-900)', marginBottom: '2px' }}>Pradeeshwaran M</h3>
-                    <p style={{ fontSize: '0.825rem', color: 'var(--text-subtle)' }}>Software Engineer & Freelancer</p>
+                    <h3 style={{ fontSize: '1.2rem', color: 'var(--primary-900)', marginBottom: '2px' }}>Pradeeshwaran M</h3>
+                    <p style={{ fontSize: '0.825rem', color: 'var(--brand-600)', fontWeight: 600 }}>Full-Stack Software Engineer</p>
                   </div>
                 </div>
                 <span className="badge badge-gold" style={{ fontSize: '0.75rem' }}>
-                  <Award size={12} /> IIT Madras Alum
+                  <Award size={12} /> IIT Madras CSTF
                 </span>
               </div>
 
+              {/* Target Candidate Quick Info */}
+              <div
+                style={{
+                  backgroundColor: 'var(--bg-main)',
+                  borderRadius: 'var(--radius-sm)',
+                  padding: '0.875rem 1rem',
+                  border: '1px solid var(--border-light)',
+                  marginBottom: '1.25rem',
+                  fontSize: '0.8rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '6px'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-800)', fontWeight: 600 }}>
+                  <Briefcase size={14} color="var(--brand-600)" />
+                  <span><strong>Target:</strong> Full-Stack Developer / SDE I / Backend</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-800)' }}>
+                  <Clock size={14} color="var(--accent-emerald)" />
+                  <span><strong>Notice:</strong> Immediate Joiner (0 Days)</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-800)' }}>
+                  <MapPin size={14} color="var(--accent-gold)" />
+                  <span>Chennai, India (Open to Relocation & Remote)</span>
+                </div>
+              </div>
+
               {/* Core Skill Badges Grid */}
-              <div style={{ marginBottom: '1.5rem' }}>
-                <div style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-subtle)', fontWeight: 700, marginBottom: '0.75rem' }}>
-                  Key Engineering Competencies
+              <div style={{ marginBottom: '1.25rem' }}>
+                <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-subtle)', fontWeight: 700, marginBottom: '0.6rem' }}>
+                  Core Tech Stack
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                  {["Python", "Node.js", "Express.js", "React.js", "PostgreSQL", "PyTorch", "Linux CLI", "RESTful APIs", "JWT / Auth", "PHP"].map((skill) => (
-                    <span key={skill} className="badge badge-neutral" style={{ fontSize: '0.78rem', padding: '3px 10px' }}>
+                  {["React.js", "Node.js", "Express.js", "PostgreSQL", "JavaScript (ES6+)", "Python", "REST APIs", "JWT / RBAC", "PyTorch", "Linux CLI", "Git"].map((skill) => (
+                    <span key={skill} className="badge badge-neutral" style={{ fontSize: '0.75rem', padding: '3px 9px' }}>
                       {skill}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Verified Experience Card Snippet */}
+              {/* Verified Experience Snippet */}
               <div
                 style={{
-                  backgroundColor: 'var(--bg-main)',
+                  backgroundColor: '#f8fafc',
                   borderRadius: 'var(--radius-sm)',
-                  padding: '1rem',
+                  padding: '0.875rem 1rem',
                   border: '1px solid var(--border-light)',
-                  marginBottom: '1.5rem'
+                  marginBottom: '1.25rem'
                 }}
               >
-                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--primary-900)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span>IIT Madras CSTF</span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--brand-600)', fontWeight: 600 }}>2026</span>
+                <div style={{ fontSize: '0.825rem', fontWeight: 700, color: 'var(--primary-900)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <span>IIT Madras CSTF (2026)</span>
+                  <span className="badge badge-brand" style={{ fontSize: '0.7rem', padding: '2px 6px' }}>Full-Stack Intern</span>
                 </div>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                  Built full-stack fleet portal serving 100+ active institutional users with LDAP & React/Node.
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '4px', lineHeight: 1.4 }}>
+                  Engineered centralized fleet management system for 100+ active institutional users with LDAP & React/Node.
                 </p>
               </div>
 
@@ -256,10 +318,13 @@ export default function Hero({ onOpenContact }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px'
+                  gap: '8px',
+                  transition: 'background 0.2s ease'
                 }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--brand-600)')}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--primary-900)')}
               >
-                Get In Touch <ArrowRight size={16} />
+                Get In Touch / Schedule Interview <ArrowRight size={16} />
               </button>
             </div>
           </div>
@@ -281,14 +346,19 @@ export default function Hero({ onOpenContact }) {
             alignItems: 'center'
           }}
         >
-          {personalInfo.freelanceStats.map((stat, idx) => (
+          {personalInfo.impactMetrics.map((stat, idx) => (
             <div key={idx} style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--brand-600)', fontFamily: 'var(--font-heading)' }}>
                 {stat.value}
               </div>
-              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--primary-700)', marginTop: '2px' }}>
+              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--primary-900)', marginTop: '2px' }}>
                 {stat.label}
               </div>
+              {stat.detail && (
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', marginTop: '3px' }}>
+                  {stat.detail}
+                </div>
+              )}
             </div>
           ))}
         </div>

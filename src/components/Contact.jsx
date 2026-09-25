@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, Linkedin, Send, Copy, Check, Clock, Shield, Loader2 } from 'lucide-react';
+import { Mail, Phone, Linkedin, Github, Send, Copy, Check, Clock, Shield, Briefcase, MapPin, Loader2 } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 
 export default function Contact({ prefilledMessage }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    serviceType: 'Full-Stack Web App',
-    budget: '$300 - $600',
+    company: '',
+    roleType: 'Full-Stack Developer (Full-Time)',
+    workModel: 'Flexible / Hybrid / Remote',
     message: ''
   });
 
   const [copiedField, setCopiedField] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (prefilledMessage) {
@@ -33,10 +33,10 @@ export default function Contact({ prefilledMessage }) {
     if (!formData.name || !formData.email || !formData.message) return;
 
     setIsSubmitting(true);
-    setErrorMessage('');
 
     try {
       // Send real email via FormSubmit AJAX service directly to sendmail2pradeesh@gmail.com
+      const companyStr = formData.company ? ` at ${formData.company}` : '';
       const response = await fetch('https://formsubmit.co/ajax/sendmail2pradeesh@gmail.com', {
         method: 'POST',
         headers: {
@@ -44,11 +44,12 @@ export default function Contact({ prefilledMessage }) {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          _subject: `⚡ New Freelance Inquiry from ${formData.name}`,
-          name: formData.name,
+          _subject: `💼 Job Opportunity: ${formData.roleType}${companyStr} (${formData.name})`,
+          recruiter_name: formData.name,
           email: formData.email,
-          serviceType: formData.serviceType,
-          budget: formData.budget,
+          company: formData.company || 'Not Specified',
+          role_type: formData.roleType,
+          work_model: formData.workModel,
           message: formData.message,
           _captcha: 'false'
         })
@@ -58,13 +59,13 @@ export default function Contact({ prefilledMessage }) {
         setSubmitted(true);
       } else {
         // Fallback email trigger
-        window.location.href = `mailto:${personalInfo.email}?subject=${encodeURIComponent(`Freelance Inquiry: ${formData.serviceType}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`)}`;
+        window.location.href = `mailto:${personalInfo.email}?subject=${encodeURIComponent(`Job Opportunity: ${formData.roleType}${companyStr}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nCompany: ${formData.company}\nEmail: ${formData.email}\nRole: ${formData.roleType}\nWork Model: ${formData.workModel}\n\nMessage:\n${formData.message}`)}`;
         setSubmitted(true);
       }
     } catch (err) {
       console.error('Email submission error:', err);
       // Fallback to mailto link if network is blocked
-      window.location.href = `mailto:${personalInfo.email}?subject=${encodeURIComponent(`Freelance Inquiry: ${formData.serviceType}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`)}`;
+      window.location.href = `mailto:${personalInfo.email}?subject=${encodeURIComponent(`Job Opportunity: ${formData.roleType}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nCompany: ${formData.company}\nEmail: ${formData.email}\nRole: ${formData.roleType}\nWork Model: ${formData.workModel}\n\nMessage:\n${formData.message}`)}`;
       setSubmitted(true);
     } finally {
       setIsSubmitting(false);
@@ -72,19 +73,19 @@ export default function Contact({ prefilledMessage }) {
   };
 
   return (
-    <section id="contact" className="section" style={{ backgroundColor: 'var(--bg-main)' }}>
+    <section id="contact" className="section" style={{ backgroundColor: 'var(--bg-main)', scrollMarginTop: '60px' }}>
       <div className="container">
         
         {/* Header */}
         <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 4rem auto' }}>
           <span className="badge badge-emerald" style={{ marginBottom: '1rem' }}>
-            Let's Collaborate
+            Let's Connect
           </span>
           <h2 style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--primary-900)', marginBottom: '1rem' }}>
-            Start Your Freelance Project Today
+            Connect Regarding Engineering Roles
           </h2>
           <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)' }}>
-            Have a project in mind, need a full-stack developer, or AI automation? Fill out the form below to send an instant email to <strong>{personalInfo.email}</strong>.
+            Actively interviewing for <strong>Full-Stack Developer</strong> and <strong>Software Development Engineer</strong> roles. Reach out directly or send details via the form below.
           </p>
         </div>
 
@@ -95,8 +96,8 @@ export default function Contact({ prefilledMessage }) {
             gap: '2.5rem'
           }}
         >
-          {/* Left Column: Direct Contact Info & Guarantees */}
-          <div style={{ gridColumn: 'span 12', '@media (min-width: 992px)': { gridColumn: 'span 5' } }} className="cnt-left-col">
+          {/* Left Column: Direct Contact Info & Candidate Snapshot */}
+          <div style={{ gridColumn: 'span 12' }} className="cnt-left-col">
             <div
               className="classic-card"
               style={{
@@ -109,18 +110,18 @@ export default function Contact({ prefilledMessage }) {
               }}
             >
               <div>
-                <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-900)', marginBottom: '1.5rem' }}>
-                  Direct Contact Information
+                <h3 style={{ fontSize: '1.35rem', color: 'var(--primary-900)', marginBottom: '1.25rem' }}>
+                  Direct Contact & Candidate Info
                 </h3>
 
                 {/* Email Box */}
                 <div
                   style={{
-                    padding: '1.25rem',
+                    padding: '1.15rem',
                     borderRadius: 'var(--radius-md)',
                     backgroundColor: 'var(--bg-main)',
                     border: '1px solid var(--border-light)',
-                    marginBottom: '1rem',
+                    marginBottom: '0.875rem',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between'
@@ -157,11 +158,11 @@ export default function Contact({ prefilledMessage }) {
                 {/* Phone Box */}
                 <div
                   style={{
-                    padding: '1.25rem',
+                    padding: '1.15rem',
                     borderRadius: 'var(--radius-md)',
                     backgroundColor: 'var(--bg-main)',
                     border: '1px solid var(--border-light)',
-                    marginBottom: '1rem',
+                    marginBottom: '0.875rem',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between'
@@ -195,49 +196,106 @@ export default function Contact({ prefilledMessage }) {
                   </button>
                 </div>
 
-                {/* LinkedIn Link */}
-                <a
-                  href={personalInfo.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
+                {/* Professional Profiles Grid */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                  <a
+                    href={personalInfo.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      padding: '1rem',
+                      borderRadius: 'var(--radius-md)',
+                      backgroundColor: 'var(--bg-main)',
+                      border: '1px solid var(--border-light)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      transition: 'border-color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--brand-600)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-light)')}
+                  >
+                    <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: '#e0e7ff', color: '#3730a3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Linkedin size={18} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '0.725rem', color: 'var(--text-subtle)', fontWeight: 600 }}>LinkedIn</div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--brand-600)' }}>Connect →</div>
+                    </div>
+                  </a>
+
+                  <a
+                    href={personalInfo.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      padding: '1rem',
+                      borderRadius: 'var(--radius-md)',
+                      backgroundColor: 'var(--bg-main)',
+                      border: '1px solid var(--border-light)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      transition: 'border-color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--brand-600)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border-light)')}
+                  >
+                    <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: '#f1f5f9', color: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Github size={18} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '0.725rem', color: 'var(--text-subtle)', fontWeight: 600 }}>GitHub</div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--primary-900)' }}>View Code →</div>
+                    </div>
+                  </a>
+                </div>
+
+                {/* Candidate Availability Card */}
+                <div
                   style={{
-                    padding: '1.25rem',
+                    backgroundColor: 'var(--bg-accent-soft)',
                     borderRadius: 'var(--radius-md)',
-                    backgroundColor: 'var(--bg-main)',
-                    border: '1px solid var(--border-light)',
-                    marginBottom: '1.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px'
+                    padding: '1.25rem',
+                    border: '1px solid var(--border-brand)',
+                    marginBottom: '1.25rem'
                   }}
                 >
-                  <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#e0e7ff', color: '#3730a3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Linkedin size={20} />
+                  <div style={{ fontSize: '0.825rem', fontWeight: 700, color: 'var(--brand-700)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.5rem' }}>
+                    Hiring Snapshot
                   </div>
-                  <div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', fontWeight: 600 }}>LinkedIn Profile</div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--brand-600)' }}>Connect on LinkedIn →</div>
-                  </div>
-                </a>
-
-                {/* Guarantee Pills */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', borderTop: '1px solid var(--border-light)', paddingTop: '1.5rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--primary-700)' }}>
-                    <Clock size={16} color="var(--brand-600)" />
-                    <span>Response guaranteed within <strong>24 hours</strong></span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', color: 'var(--primary-700)' }}>
-                    <Shield size={16} color="var(--accent-emerald)" />
-                    <span>NDAs & strict code confidentiality</span>
-                  </div>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.85rem', color: 'var(--primary-900)' }}>
+                    <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Check size={14} color="var(--accent-emerald)" />
+                      <span><strong>Availability:</strong> Immediate Joiner (0 Days Notice)</span>
+                    </li>
+                    <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Check size={14} color="var(--accent-emerald)" />
+                      <span><strong>Target Roles:</strong> Full-Stack Developer, SDE I, Backend</span>
+                    </li>
+                    <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Check size={14} color="var(--accent-emerald)" />
+                      <span><strong>Location:</strong> Chennai (Open to Relocation & Remote)</span>
+                    </li>
+                    <li style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Check size={14} color="var(--accent-emerald)" />
+                      <span><strong>Degrees:</strong> Integrated M.Sc. IT (Anna University)</span>
+                    </li>
+                  </ul>
                 </div>
+              </div>
+
+              {/* Guarantees / Response pledge */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.825rem', color: 'var(--text-subtle)', borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
+                <Clock size={16} color="var(--brand-600)" />
+                <span>Response guaranteed within <strong>24 hours</strong>.</span>
               </div>
 
             </div>
           </div>
 
-          {/* Right Column: Inquiry Form */}
-          <div style={{ gridColumn: 'span 12', '@media (min-width: 992px)': { gridColumn: 'span 7' } }} className="cnt-right-col">
+          {/* Right Column: Recruiter Inquiry Form */}
+          <div style={{ gridColumn: 'span 12' }} className="cnt-right-col">
             <div
               className="classic-card"
               style={{
@@ -263,15 +321,22 @@ export default function Contact({ prefilledMessage }) {
                     <Check size={32} />
                   </div>
                   <h3 style={{ fontSize: '1.6rem', color: 'var(--primary-900)', marginBottom: '0.75rem' }}>
-                    Email Sent Successfully!
+                    Inquiry Dispatched Successfully!
                   </h3>
                   <p style={{ color: 'var(--text-muted)', fontSize: '1rem', maxWidth: '480px', margin: '0 auto 2rem auto' }}>
-                    Thank you, <strong>{formData.name}</strong>! An email with your project details has been sent to <strong>sendmail2pradeesh@gmail.com</strong>. I will get back to you shortly.
+                    Thank you, <strong>{formData.name}</strong>! Your message regarding opportunities at <strong>{formData.company || 'your company'}</strong> has been sent directly to <strong>{personalInfo.email}</strong>. I look forward to speaking with you.
                   </p>
                   <button
                     onClick={() => {
                       setSubmitted(false);
-                      setFormData({ name: '', email: '', serviceType: 'Full-Stack Web App', budget: '$300 - $600', message: '' });
+                      setFormData({
+                        name: '',
+                        email: '',
+                        company: '',
+                        roleType: 'Full-Stack Developer (Full-Time)',
+                        workModel: 'Flexible / Hybrid / Remote',
+                        message: ''
+                      });
                     }}
                     style={{
                       padding: '10px 20px',
@@ -287,19 +352,25 @@ export default function Contact({ prefilledMessage }) {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
-                  <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-900)', marginBottom: '1.5rem' }}>
-                    Send a Project Inquiry
-                  </h3>
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.4rem', color: 'var(--primary-900)', marginBottom: '0.35rem' }}>
+                      Send Job Opportunity / Message
+                    </h3>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-subtle)' }}>
+                      Fill in the details below to initiate an interview conversation or discuss open roles.
+                    </p>
+                  </div>
 
+                  {/* Row 1: Name and Company Email */}
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
                     <div>
-                      <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
-                        Your Full Name *
+                      <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
+                        Your Full Name / Recruiter Name *
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Alex Morgan"
+                        placeholder="e.g. Priya Sharma"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         style={{
@@ -314,13 +385,13 @@ export default function Contact({ prefilledMessage }) {
                     </div>
 
                     <div>
-                      <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
-                        Email Address *
+                      <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
+                        Work / Company Email Address *
                       </label>
                       <input
                         type="email"
                         required
-                        placeholder="alex@company.com"
+                        placeholder="priya@company.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         style={{
@@ -335,38 +406,35 @@ export default function Contact({ prefilledMessage }) {
                     </div>
                   </div>
 
+                  {/* Row 2: Company Name and Role Type */}
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '1.25rem' }}>
                     <div>
-                      <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
-                        Project Type
+                      <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
+                        Company / Organization Name
                       </label>
-                      <select
-                        value={formData.serviceType}
-                        onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
+                      <input
+                        type="text"
+                        placeholder="e.g. Google / Microsoft / Tech Startup"
+                        value={formData.company}
+                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                         style={{
                           width: '100%',
                           padding: '12px',
                           borderRadius: 'var(--radius-sm)',
                           border: '1px solid var(--border-medium)',
                           fontSize: '0.925rem',
-                          fontFamily: 'inherit',
-                          backgroundColor: '#ffffff'
+                          fontFamily: 'inherit'
                         }}
-                      >
-                        <option value="Full-Stack Web App">Full-Stack Web Application</option>
-                        <option value="AI & Machine Learning">AI & Python Automation</option>
-                        <option value="Server Setup & Optimization">Linux & Performance Setup</option>
-                        <option value="Consultation">General Consultation</option>
-                      </select>
+                      />
                     </div>
 
                     <div>
-                      <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
-                        Estimated Budget
+                      <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
+                        Target Role Type
                       </label>
                       <select
-                        value={formData.budget}
-                        onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
+                        value={formData.roleType}
+                        onChange={(e) => setFormData({ ...formData, roleType: e.target.value })}
                         style={{
                           width: '100%',
                           padding: '12px',
@@ -377,22 +445,49 @@ export default function Contact({ prefilledMessage }) {
                           backgroundColor: '#ffffff'
                         }}
                       >
-                        <option value="Under $300">Under $300</option>
-                        <option value="$300 - $600">$300 – $600</option>
-                        <option value="$600 - $1,200">$600 – $1,200</option>
-                        <option value="$1,200+">$1,200+</option>
+                        <option value="Full-Stack Developer (Full-Time)">Full-Stack Developer (Full-Time)</option>
+                        <option value="Software Development Engineer (SDE I)">Software Development Engineer (SDE I)</option>
+                        <option value="Backend Software Engineer">Backend Software Engineer</option>
+                        <option value="Frontend Developer">Frontend Developer</option>
+                        <option value="Contract-to-Hire / Technical Consulting">Contract-to-Hire / Consulting</option>
                       </select>
                     </div>
                   </div>
 
+                  {/* Row 3: Work Model */}
+                  <div style={{ marginBottom: '1.25rem' }}>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
+                      Location & Work Model
+                    </label>
+                    <select
+                      value={formData.workModel}
+                      onChange={(e) => setFormData({ ...formData, workModel: e.target.value })}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        borderRadius: 'var(--radius-sm)',
+                        border: '1px solid var(--border-medium)',
+                        fontSize: '0.925rem',
+                        fontFamily: 'inherit',
+                        backgroundColor: '#ffffff'
+                      }}
+                    >
+                      <option value="Flexible / Hybrid / Remote">Flexible / Hybrid / Remote</option>
+                      <option value="On-Site - Chennai">On-Site - Chennai</option>
+                      <option value="On-Site - Bangalore / Hyderabad / Pune">On-Site - Bangalore / Hyderabad / Pune</option>
+                      <option value="Full Remote">Full Remote</option>
+                    </select>
+                  </div>
+
+                  {/* Row 4: Message / JD */}
                   <div style={{ marginBottom: '1.5rem' }}>
-                    <label style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
-                      Project Details & Requirements *
+                    <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary-900)', display: 'block', marginBottom: '0.4rem' }}>
+                      Job Description, Questions or Interview Invite *
                     </label>
                     <textarea
                       rows={5}
                       required
-                      placeholder="Describe your goals, features required, or target launch date..."
+                      placeholder="Share details about the role, technical requirements, team culture, or propose a time for an intro call..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       style={{
@@ -424,17 +519,20 @@ export default function Contact({ prefilledMessage }) {
                       gap: '8px',
                       boxShadow: '0 4px 14px rgba(37, 99, 235, 0.3)',
                       opacity: isSubmitting ? 0.8 : 1,
-                      cursor: isSubmitting ? 'wait' : 'pointer'
+                      cursor: isSubmitting ? 'wait' : 'pointer',
+                      transition: 'background 0.2s ease'
                     }}
+                    onMouseEnter={(e) => !isSubmitting && (e.currentTarget.style.backgroundColor = 'var(--brand-700)')}
+                    onMouseLeave={(e) => !isSubmitting && (e.currentTarget.style.backgroundColor = 'var(--brand-600)')}
                   >
                     {isSubmitting ? (
                       <>
                         <Loader2 size={18} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
-                        Sending Email to sendmail2pradeesh@gmail.com...
+                        Dispatching to sendmail2pradeesh@gmail.com...
                       </>
                     ) : (
                       <>
-                        Submit Project Inquiry <Send size={18} />
+                        Submit Inquiry & Connect <Send size={18} />
                       </>
                     )}
                   </button>

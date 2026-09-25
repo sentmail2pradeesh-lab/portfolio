@@ -21,8 +21,8 @@ export default function App() {
     }
   };
 
-  const handleSelectService = (service) => {
-    const msg = `Hi Pradeeshwaran, I am interested in your "${service.title}" service. Let's discuss requirements.`;
+  const handleSelectService = (domain) => {
+    const msg = `Hi Pradeeshwaran, we have an engineering opportunity at our company involving ${domain.title}. Let's connect for an initial discussion.`;
     handleOpenContact(msg);
   };
 

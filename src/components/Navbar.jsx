@@ -15,8 +15,8 @@ export default function Navbar({ onOpenContact }) {
   }, []);
 
   const navLinks = [
-    { name: 'Services', href: '#services' },
-    { name: 'Portfolio', href: '#portfolio' },
+    { name: 'Expertise', href: '#expertise' },
+    { name: 'Projects', href: '#projects' },
     { name: 'Experience', href: '#experience' },
     { name: 'Resume', href: '#resume' },
     { name: 'Contact', href: '#contact' },
@@ -61,7 +61,7 @@ export default function Navbar({ onOpenContact }) {
             </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-subtle)', display: 'flex', alignItems: 'center', gap: '5px' }}>
               <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' }}></span>
-              Freelance Engineer
+              Full-Stack Developer • Open to Roles
             </div>
           </div>
         </a>
@@ -112,7 +112,7 @@ export default function Navbar({ onOpenContact }) {
               e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            Hire Me <ArrowRight size={16} />
+            Get In Touch <ArrowRight size={16} />
           </button>
 
           {/* Mobile Menu Toggle */}

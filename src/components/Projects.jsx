@@ -13,19 +13,21 @@ export default function Projects({ onOpenContact }) {
     : portfolioProjects.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="portfolio" className="section" style={{ backgroundColor: 'var(--bg-main)' }}>
+    <section id="projects" className="section" style={{ backgroundColor: 'var(--bg-main)', scrollMarginTop: '60px' }}>
+      {/* Anchor for backward compatibility */}
+      <div id="portfolio" style={{ position: 'relative', top: '-70px' }} />
       <div className="container">
         
         {/* Header */}
         <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 3rem auto' }}>
           <span className="badge badge-gold" style={{ marginBottom: '1rem' }}>
-            Featured Portfolio Works
+            Featured Engineering Projects
           </span>
           <h2 style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--primary-900)', marginBottom: '1rem' }}>
-            Engineering Case Studies & Research
+            Production Systems & Research Case Studies
           </h2>
           <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)' }}>
-            Selected full-stack web platforms, machine learning models, and IoT systems built at IIT Madras, Atsuya Tech, and academic research labs.
+            Full-stack web platforms, machine learning models, and IoT systems built at IIT Madras, Atsuya Technologies, and research labs.
           </p>
         </div>
 
@@ -265,7 +267,7 @@ export default function Projects({ onOpenContact }) {
                 <button
                   onClick={() => {
                     setSelectedProject(null);
-                    onOpenContact();
+                    onOpenContact(`Hi Pradeeshwaran, I would like to discuss your experience working on the "${selectedProject.title}" project for an engineering role at our company.`);
                   }}
                   style={{
                     flex: 1,
@@ -277,7 +279,7 @@ export default function Projects({ onOpenContact }) {
                     fontSize: '0.95rem'
                   }}
                 >
-                  Inquire Similar Project
+                  Discuss This Project / Role
                 </button>
                 <button
                   onClick={() => setSelectedProject(null)}
